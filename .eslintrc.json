@@ -30,7 +30,7 @@
     "@typescript-eslint/no-namespace": "off",
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": [
-      "error",
+      "warning",
       {
         "endOfLine": "auto"
       }

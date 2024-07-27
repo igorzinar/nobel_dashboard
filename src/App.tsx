@@ -1,10 +1,15 @@
+import { Provider } from 'react-redux';
+import { store } from './store';
+import MainLayout from './components/MainLayout';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/core';
+
 function App() {
   return (
-    <div
-      style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
-    >
-      <h1>Nobel Prize</h1>
-    </div>
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={DEFAULT_THEME}>
+      <Provider store={store}>
+        <MainLayout />
+      </Provider>
+    </MantineProvider>
   );
 }
 
