@@ -8,7 +8,7 @@ interface IThProps {
 
 export const Th: FC<IThProps> = ({ children, width = 'auto' }) => {
   return (
-    <th style={{ width, minWidth: width }}>
+    <th style={{ width, maxWidth: 600 }}>
       {children ? (
         <Group position="apart">
           <Text weight={400} size="sm" color="gray.6" fw={400}>

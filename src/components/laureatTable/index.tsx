@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useState } from 'react';
+import React from 'react';
 import { Box, Loader, Table } from '@mantine/core';
 import { Tr } from './Tr';
 import { ILaureateCommonInfo } from '../../types/laureateCommon';
@@ -8,17 +8,21 @@ import { useStyles } from './styles';
 
 interface ILaureatesTableProps {
   laureates: ILaureateCommonInfo[];
-  scrollRef?: MutableRefObject<null>;
+  scrollRef?: any;
   getNextData: () => void;
   allDataLength: number;
   handleRowClick: (id: number) => void;
+  isLoading: boolean;
+  isFetching: boolean;
 }
 const LaureatesTable = ({
   laureates,
   scrollRef,
   getNextData,
   allDataLength,
-  handleRowClick
+  handleRowClick,
+  isLoading,
+  isFetching
 }: ILaureatesTableProps) => {
   const { classes } = useStyles();
 
@@ -50,18 +54,29 @@ const LaureatesTable = ({
           </>
         }
         className={classes.infiniteScroll}
-        height={'calc(50vh - 100px)'}
+        height={400}
       >
         <Table
           horizontalSpacing="md"
           verticalSpacing="xs"
           captionSide="top"
           highlightOnHover
-          style={{ margin: '32px', maxWidth: '80%' }}
+          // style={{ margin: '32px', maxWidth: '80%' }}
         >
-          <caption>Nobel laureates table</caption>
+          {/*<caption>Nobel laureates table</caption>*/}
           <thead>{Ths}</thead>
-          <tbody>{rows}</tbody>
+          <tbody>
+            {(isLoading || isFetching) && (
+              <tr className={classes.tr} style={{ height: 400 }}>
+                <td colSpan={2}>
+                  <Box className={classes.infiniteScrollMoreData}>
+                    <Loader size="sm" />
+                  </Box>
+                </td>
+              </tr>
+            )}
+            {rows}
+          </tbody>
         </Table>
       </InfiniteScroll>
     </Box>

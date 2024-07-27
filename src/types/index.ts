@@ -21,6 +21,12 @@ export interface IPrizesListQuery {
   yearTo?: number;
 }
 
+export interface IPrizesListResponse {
+  nobelPrizes: IPrizeItem[];
+  links?: ILinks;
+  meta?: IMeta;
+}
+
 export interface IPrizeByCategoryQuery {
   category: string;
   year: number;
@@ -37,7 +43,7 @@ export interface IMeta {
   offset?: number;
   limit?: number;
   residence?: string;
-  count?: number;
+  count: number;
   terms?: string;
   license?: string;
   disclaimer?: string;
@@ -54,5 +60,5 @@ export interface ILinks {
 export interface ILaureateListResponse {
   laureates: ILaureateCommonInfo[];
   links?: ILinks;
-  meta?: IMeta;
+  meta: IMeta;
 }

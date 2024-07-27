@@ -4,7 +4,8 @@ import {
   ILaureateListResponse,
   IPrizeByCategoryQuery,
   IPrizeItem,
-  IPrizesListQuery
+  IPrizesListQuery,
+  IPrizesListResponse
 } from '../types';
 import { ILaureateCommonInfo } from '../types/laureateCommon';
 
@@ -14,7 +15,7 @@ export const nobelApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getPrizes: builder.query<IPrizeItem[] | undefined, IPrizesListQuery | undefined>({
+    getPrizes: builder.query<IPrizesListResponse, IPrizesListQuery>({
       query: (payload?: IPrizesListQuery) => ({
         params: {
           ...payload

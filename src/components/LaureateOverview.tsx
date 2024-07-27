@@ -1,39 +1,69 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LoadingOverlay, Modal, TextInput } from '@mantine/core';
 import { useGetLaureatesListQuery } from '../services';
 import LaureatesTable from './laureatTable';
 import { useDisclosure } from '@mantine/hooks';
 import LaureateOverviewModal from './modals/LaureateOverviewModal';
+import { useActions } from '../hooks/redux/action';
+import LaureatesFilter from './feature/laureates/LaureatesFilter';
+import { useAppSelector } from '../hooks/redux/redux';
+import { ILaureateCommonInfo } from '../types/laureateCommon';
 
 const LaureateOverview = () => {
-  const scrollRef = useRef(null);
-  const [search, setSearch] = useState<string>('');
-  const [selectedLaureate, setSelectedLaureate] = useState<number | null>(null);
-  const { data, error, isLoading } = useGetLaureatesListQuery({ name: search, limit: 10 });
+  const { setLaureates, setLaureatesFilters } = useActions();
+  const { laureates, filters: laureateFilters, total } = useAppSelector((state) => state.laureates);
+  const [laureatesTableData, setLaureatesTableData] = useState<ILaureateCommonInfo[]>([]);
+
+  const scrollRef = useRef<any>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const handleCloseModal = () => {
     setSelectedLaureate(null);
     close();
   };
+  const [selectedLaureate, setSelectedLaureate] = useState<number | null>(null);
+  const { data, error, isLoading, isFetching } = useGetLaureatesListQuery({
+    offset: laureateFilters.offset,
+    name: laureateFilters.name,
+    limit: laureateFilters.limit
+  });
+  // console.log('laureateFilters ===> ', laureateFilters);
+  useEffect(() => {
+    if (data) {
+      console.log('data ===> ', data);
+      const laureatesData =
+        laureateFilters.offset > 0 ? [...laureates, ...data.laureates] : data?.laureates;
+      setLaureates({ ...data, laureates: laureatesData });
+    }
+  }, [data]);
 
-  if (error) return <div>Error loading data</div>;
-  console.log('data?.laureates ===> ', data?.laureates);
+  const handleLoadMore = () => {
+    setLaureatesFilters({
+      ...laureateFilters,
+      offset: laureateFilters.offset + 20
+    });
+    console.log('handleLoadMore');
+  };
+
+  useEffect(() => {
+    setLaureatesTableData(laureates || []);
+  }, [laureates]);
+
+  // if (error) return <div>Error loading data</div>;
+  // console.log('data?.laureates ===> ', data?.laureates);
   const handleRowClick = (id: number) => {
     setSelectedLaureate(id);
     open();
   };
   return (
     <div style={{ minHeight: '500px' }}>
-      <TextInput
-        placeholder="Search for a laureate"
-        value={search}
-        onChange={(e) => setSearch(e.currentTarget.value)}
-      />
+      <LaureatesFilter />
       <LaureatesTable
+        isLoading={isLoading}
+        isFetching={isFetching}
         handleRowClick={handleRowClick}
-        laureates={data?.laureates || []}
-        allDataLength={100}
-        getNextData={() => console.log('nex data ===> ')}
+        laureates={laureatesTableData}
+        allDataLength={total}
+        getNextData={handleLoadMore}
         scrollRef={scrollRef}
       />
       {selectedLaureate && (
