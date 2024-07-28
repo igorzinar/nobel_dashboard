@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { ILaureateCommonInfo } from '../../types/laureateCommon';
-
+import { ILaureateCommonInfo } from '../../entities/laureates/types';
 interface ITrProps {
   laureate?: ILaureateCommonInfo;
   handleRowClick?: (id: number) => void;

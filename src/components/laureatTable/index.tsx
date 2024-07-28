@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Loader, Table } from '@mantine/core';
 import { Tr } from './Tr';
-import { ILaureateCommonInfo } from '../../types/laureateCommon';
 import { Th } from './Th';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useStyles } from './styles';
+import { ILaureateCommonInfo } from '../../entities/laureates/types';
 
 interface ILaureatesTableProps {
   laureates: ILaureateCommonInfo[];

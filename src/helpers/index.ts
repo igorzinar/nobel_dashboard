@@ -1,4 +1,4 @@
-import { INobelPrizeLink } from '../types/laureateCommon';
+import { INobelPrizeLink } from '../types';
 
 export const getExternalPrizeLink = (links: INobelPrizeLink[]): string => {
   if (!Array.isArray(links) || links.length === 0) {

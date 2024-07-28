@@ -46,7 +46,7 @@ const LaureatesChart = ({ color = '#8884d8', prizes }: ILaureatesChartProps) => 
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
           <YAxis />
-          <Tooltip dataKey="category" />
+          <Tooltip />
           <Legend />
           <Line type="monotone" dataKey="laureatesCount" stroke={color} activeDot={{ r: 8 }} />
         </LineChart>

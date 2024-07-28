@@ -6,8 +6,9 @@ import { useDisclosure } from '@mantine/hooks';
 import LaureateOverviewModal from './modals/LaureateOverviewModal';
 import { useActions } from '../hooks/redux/action';
 import { useAppSelector } from '../hooks/redux/redux';
-import { ILaureateCommonInfo } from '../types/laureateCommon';
+
 import FilterContainer from './feature/laureates/FilterContainer';
+import { ILaureateCommonInfo } from '../entities/laureates/types';
 
 const LaureateOverview = () => {
   const { setLaureates, setLaureatesFilters } = useActions();

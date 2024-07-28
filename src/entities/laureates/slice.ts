@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ILaureateCommonInfo } from '../../types/laureateCommon';
-import { ILaureateListResponse } from '../../types';
+import { ILaureateCommonInfo, ILaureateListResponse } from './types';
 
 interface ILaureateFilter {
   limit: number;
