@@ -1,45 +1,11 @@
-import { ILaureateCommonInfo } from './laureateCommon';
-
-export interface IPrizeItem {
-  year?: string | number;
-  category?: string;
-  laureates?: ILaureate[];
+export interface INobelPrizeLink {
+  rel?: string;
+  href?: string;
+  action?: string;
+  types?: string;
 }
 
-export interface ILaureate {
-  id?: string | number;
-  firstname?: string;
-  surname?: string;
-  motivation?: string;
-  share?: string;
-}
-
-export interface IPrizesListQuery {
-  offset?: number;
-  limit?: number;
-  nobelPrizeYear?: string | number;
-  yearTo?: string | number;
-}
-
-export interface IPrizesListResponse {
-  nobelPrizes: IPrizeItem[];
-  links?: ILinks;
-  meta?: IMeta;
-}
-
-export interface IPrizeByCategoryQuery {
-  category: string;
-  year: number;
-}
-
-export interface ILaureateListQuery {
-  offset?: number;
-  limit?: number;
-  name?: string;
-  residence?: string;
-}
-
-export interface IMeta {
+export interface IMetaResponse {
   offset?: number;
   limit?: number;
   residence?: string;
@@ -57,8 +23,56 @@ export interface ILinks {
   last?: string;
 }
 
-export interface ILaureateListResponse {
-  laureates: ILaureateCommonInfo[];
-  links?: ILinks;
-  meta: IMeta;
+export interface IName {
+  en?: string;
+  se?: string;
+}
+
+export interface IBirthDeath {
+  date?: string;
+  place?: IPlace;
+}
+
+export interface IPlace {
+  city?: IMultilingual;
+  country?: IMultilingual;
+  cityNow?: IMultilingualWithCoords;
+  countryNow?: IMultilingualWithCoords;
+  continent?: IMultilingual;
+  locationString?: IMultilingual;
+}
+
+export interface IMultilingual {
+  en: string;
+  no?: string;
+  se?: string;
+}
+
+export interface IMultilingualWithCoords extends IMultilingual {
+  sameAs?: string[];
+  latitude?: string;
+  longitude?: string;
+}
+
+export interface IWikipedia {
+  slug?: string;
+  english?: string;
+}
+
+export interface IWikidata {
+  id?: string;
+  url?: string;
+}
+
+export interface INobelPrizeLink {
+  rel?: string;
+  href?: string;
+  action?: string;
+  types?: string;
+  title?: string;
+  class?: string[];
+}
+
+export interface IMultilingualNow {
+  en?: string;
 }

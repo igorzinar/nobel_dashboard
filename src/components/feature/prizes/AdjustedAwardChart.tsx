@@ -10,56 +10,17 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { Modal, Button, Group } from '@mantine/core';
-import { a } from 'vite/dist/node/types.d-aGj9QkWt';
+import { INobelPrize } from '../../../entities/prizes/types';
 
-// Define your prize data structure
-interface IPrize {
-  awardYear: string;
-  category: { en: string; no: string; se: string };
-  categoryFullName: { en: string; no: string; se: string };
-  dateAwarded: string;
-  laureates: any[];
-  links: any[];
-  prizeAmount: number;
-  prizeAmountAdjusted: number;
+interface ITransformedPrize extends INobelPrize {
+  year: number;
+  amount: number;
+  details: string;
 }
 
-// Sample prize data
-// const prizes: Prize[] = [
-//   {
-//     awardYear: '1901',
-//     category: { en: 'Chemistry', no: 'Kjemi', se: 'Kemi' },
-//     categoryFullName: {
-//       en: 'The Nobel Prize in Chemistry',
-//       no: 'Nobelprisen i kjemi',
-//       se: 'Nobelpriset i kemi'
-//     },
-//     dateAwarded: '1901-11-12',
-//     laureates: [],
-//     links: [],
-//     prizeAmount: 150782,
-//     prizeAmountAdjusted: 10531894
-//   },
-//   {
-//     awardYear: '1902',
-//     category: { en: 'Physics', no: 'Fysikk', se: 'Fysik' },
-//     categoryFullName: {
-//       en: 'The Nobel Prize in Physics',
-//       no: 'Nobelprisen i fysikk',
-//       se: 'Nobelpriset i fysik'
-//     },
-//     dateAwarded: '1902-11-12',
-//     laureates: [],
-//     links: [],
-//     prizeAmount: 150782,
-//     prizeAmountAdjusted: 10531894
-//   }
-//   // Add more prize objects as needed
-// ];
-
-// Transform prize data
-const transformPrizeData = (prizes: IPrize[]) => {
+const transformPrizeData = (prizes: INobelPrize[]) => {
   return prizes.map((prize) => ({
+    ...prize,
     year: parseInt(prize.awardYear, 10),
     amount: prize.prizeAmountAdjusted,
     details: `Category: ${prize.category.en}, Awarded: ${prize.dateAwarded}`
@@ -68,12 +29,12 @@ const transformPrizeData = (prizes: IPrize[]) => {
 
 interface IAdjustedAwardChartProps {
   color?: string;
-  prizes: any;
+  prizes: INobelPrize[];
 }
 
 const AdjustedAwardChart = ({ color = '#8884d8', prizes }: IAdjustedAwardChartProps) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPrize, setSelectedPrize] = useState<any | null>(null);
+  const [selectedPrize, setSelectedPrize] = useState<ITransformedPrize | null>(null);
 
   const data = transformPrizeData(prizes);
 
@@ -83,6 +44,8 @@ const AdjustedAwardChart = ({ color = '#8884d8', prizes }: IAdjustedAwardChartPr
       setModalOpen(true);
     }
   };
+
+  console.log('data 0  ---> ', data);
 
   return (
     <div>

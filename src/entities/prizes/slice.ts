@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPrizeItem, IPrizesListResponse } from '../../types';
+import { INobelPrize, IPrizesListResponse } from './types';
 
 interface INobelPrizesFilter {
   limit: number;
@@ -9,7 +9,7 @@ interface INobelPrizesFilter {
 }
 
 interface INobelPrizes {
-  nobelPrizes: IPrizeItem[];
+  nobelPrizes: INobelPrize[];
   total: number;
   filters: INobelPrizesFilter;
 }

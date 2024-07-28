@@ -1,13 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  ILaureateListQuery,
-  ILaureateListResponse,
+  INobelPrize,
   IPrizeByCategoryQuery,
-  IPrizeItem,
   IPrizesListQuery,
   IPrizesListResponse
-} from '../types';
-import { ILaureateCommonInfo } from '../types/laureateCommon';
+} from '../entities/prizes/types';
+import {
+  ILaureateCommonInfo,
+  ILaureateListQuery,
+  ILaureateListResponse
+} from '../entities/laureates/types';
 
 const BASE_URL = 'https://api.nobelprize.org/2.1/';
 
@@ -24,7 +26,7 @@ export const nobelApi = createApi({
         method: 'GET'
       })
     }),
-    getPrizeByCategory: builder.query<IPrizeItem[], IPrizeByCategoryQuery>({
+    getPrizeByCategory: builder.query<INobelPrize[], IPrizeByCategoryQuery>({
       query: (payload: IPrizeByCategoryQuery) => ({
         url: `nobelPrize/${payload.category}/${payload.year}`,
         method: 'GET'

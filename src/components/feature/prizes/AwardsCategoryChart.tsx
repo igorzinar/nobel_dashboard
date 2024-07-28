@@ -1,46 +1,9 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { Modal, useMantineTheme, Button, Group } from '@mantine/core';
+import { INobelPrize } from '../../../entities/prizes/types';
 
-// Define your prize data structure
-interface Prize {
-  awardYear: string;
-  category: { en: string; no: string; se: string };
-  categoryFullName: { en: string; no: string; se: string };
-  dateAwarded: string;
-  prizeAmount: number;
-  prizeAmountAdjusted: number;
-  links: {
-    rel: string;
-    href: string;
-    action: string;
-    types: string;
-  }[];
-  laureates: {
-    id: string;
-    knownName: {
-      en: string;
-    };
-    fullName: {
-      en: string;
-    };
-    portion: string;
-    sortOrder: string;
-    motivation: {
-      en: string;
-      se: string;
-    };
-    links: {
-      rel: string;
-      href: string;
-      action: string;
-      types: string;
-    }[];
-  }[];
-}
-
-// Transform category data
-const transformCategoryData = (prizes: Prize[]) => {
+const transformCategoryData = (prizes: INobelPrize[]) => {
   const categoryCount = prizes.reduce((acc, prize) => {
     const category = prize.category.en;
     if (!acc[category]) {
@@ -58,7 +21,7 @@ const transformCategoryData = (prizes: Prize[]) => {
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6384', '#36A2EB'];
 interface IAwardsCategoryChartProps {
-  prizes: any[];
+  prizes: INobelPrize[];
 }
 const AwardsCategoryChart = ({ prizes }: IAwardsCategoryChartProps) => {
   const [modalOpen, setModalOpen] = useState(false);

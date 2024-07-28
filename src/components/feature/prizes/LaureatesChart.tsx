@@ -10,45 +10,9 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { Modal, Button, Group } from '@mantine/core';
+import { INobelPrize } from '../../../entities/prizes/types';
 
-// Define your prize data structure
-interface Prize {
-  awardYear: string;
-  category: { en: string; no: string; se: string };
-  categoryFullName: { en: string; no: string; se: string };
-  dateAwarded: string;
-  prizeAmount: number;
-  prizeAmountAdjusted: number;
-  links: {
-    rel: string;
-    href: string;
-    action: string;
-    types: string;
-  }[];
-  laureates: {
-    id: string;
-    knownName: {
-      en: string;
-    };
-    fullName: {
-      en: string;
-    };
-    portion: string;
-    sortOrder: string;
-    motivation: {
-      en: string;
-      se: string;
-    };
-    links: {
-      rel: string;
-      href: string;
-      action: string;
-      types: string;
-    }[];
-  }[];
-}
-
-const transformLaureateData = (prizes: Prize[]) => {
+const transformLaureateData = (prizes: INobelPrize[]) => {
   return prizes.map((prize) => ({
     year: parseInt(prize?.awardYear, 10),
     laureatesCount: prize?.laureates?.length,
@@ -59,7 +23,7 @@ const transformLaureateData = (prizes: Prize[]) => {
 
 interface ILaureatesChartProps {
   color?: string;
-  prizes: any;
+  prizes: INobelPrize[];
 }
 
 const LaureatesChart = ({ color = '#8884d8', prizes }: ILaureatesChartProps) => {
