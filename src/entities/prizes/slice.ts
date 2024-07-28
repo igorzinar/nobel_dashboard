@@ -4,8 +4,8 @@ import { IPrizeItem, IPrizesListResponse } from '../../types';
 interface INobelPrizesFilter {
   limit: number;
   offset: number;
-  nobelPrizeYear: string;
-  yearTo: string;
+  nobelPrizeYear?: string | number;
+  yearTo?: string | number;
 }
 
 interface INobelPrizes {
@@ -18,7 +18,7 @@ const initialState: INobelPrizes = {
   nobelPrizes: [],
   total: 0,
   filters: {
-    limit: 20,
+    limit: 1000,
     offset: 0,
     nobelPrizeYear: '',
     yearTo: ''

@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { LoadingOverlay, Modal, TextInput } from '@mantine/core';
+import { LoadingOverlay, Modal } from '@mantine/core';
 import { useGetLaureatesListQuery } from '../services';
 import LaureatesTable from './laureatTable';
 import { useDisclosure } from '@mantine/hooks';
 import LaureateOverviewModal from './modals/LaureateOverviewModal';
 import { useActions } from '../hooks/redux/action';
-import LaureatesFilter from './feature/laureates/LaureatesFilter';
 import { useAppSelector } from '../hooks/redux/redux';
 import { ILaureateCommonInfo } from '../types/laureateCommon';
+import FilterContainer from './feature/laureates/FilterContainer';
 
 const LaureateOverview = () => {
   const { setLaureates, setLaureatesFilters } = useActions();
@@ -24,7 +24,8 @@ const LaureateOverview = () => {
   const { data, error, isLoading, isFetching } = useGetLaureatesListQuery({
     offset: laureateFilters.offset,
     name: laureateFilters.name,
-    limit: laureateFilters.limit
+    limit: laureateFilters.limit,
+    residence: laureateFilters.residence
   });
   // console.log('laureateFilters ===> ', laureateFilters);
   useEffect(() => {
@@ -56,7 +57,7 @@ const LaureateOverview = () => {
   };
   return (
     <div style={{ minHeight: '500px' }}>
-      <LaureatesFilter />
+      <FilterContainer />
       <LaureatesTable
         isLoading={isLoading}
         isFetching={isFetching}

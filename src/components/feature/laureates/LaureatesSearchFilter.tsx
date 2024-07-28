@@ -4,12 +4,15 @@ import { useDebounce } from '../../../hooks/useDebounce';
 import { useActions } from '../../../hooks/redux/action';
 import { useAppSelector } from '../../../hooks/redux/redux';
 import { IconSearch } from '@tabler/icons-react';
-
-const LaureatesFilter = () => {
+type searchFieldType = 'name' | 'residence';
+interface IFilterProps {
+  searchField: searchFieldType;
+}
+const LaureatesSearchFilter = ({ searchField }: IFilterProps) => {
   const { setLaureatesFilters } = useActions();
   const { filters: laureatesFilter } = useAppSelector((state) => state.laureates);
 
-  const [text, setText] = useState(laureatesFilter.name || '');
+  const [text, setText] = useState(laureatesFilter[searchField] || '');
 
   const debounced = useDebounce(text, 500);
 
@@ -17,13 +20,19 @@ const LaureatesFilter = () => {
     setLaureatesFilters({
       ...laureatesFilter,
       offset: 0,
-      name: debounced
+      [searchField]: debounced
     });
   }, [debounced]);
 
   return (
-    <SearchInput icon={<IconSearch />} setSearch={setText} value={text} placeholder={'Search'} />
+    <SearchInput
+      label={searchField === 'name' ? 'Laureate name' : 'Laureate residence'}
+      icon={<IconSearch />}
+      setSearch={setText}
+      value={text}
+      placeholder={searchField === 'name' ? 'Name' : 'Residence'}
+    />
   );
 };
 
-export default LaureatesFilter;
+export default LaureatesSearchFilter;

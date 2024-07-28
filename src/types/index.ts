@@ -17,8 +17,8 @@ export interface ILaureate {
 export interface IPrizesListQuery {
   offset?: number;
   limit?: number;
-  nobelPrizeYear?: number;
-  yearTo?: number;
+  nobelPrizeYear?: string | number;
+  yearTo?: string | number;
 }
 
 export interface IPrizesListResponse {

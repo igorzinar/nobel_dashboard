@@ -1,16 +1,15 @@
 import { ChangeEvent, FC, ReactNode } from 'react';
-import { Input, InputProps } from '@mantine/core';
+import { InputProps, TextInput } from '@mantine/core';
 import { useStyles } from './styles';
 import { IconX } from '@tabler/icons-react';
 
 export interface ISearchProps {
   placeholder?: string;
   props?: InputProps;
-  fullSize?: boolean;
   setSearch: (value: string) => void;
   value: string;
-  hideClearIcon?: boolean;
   icon?: ReactNode;
+  label?: string;
 }
 
 export const SearchInput: FC<ISearchProps> = ({
@@ -18,6 +17,7 @@ export const SearchInput: FC<ISearchProps> = ({
   setSearch,
   icon,
   value,
+  label,
   ...props
 }) => {
   const { classes } = useStyles();
@@ -31,9 +31,9 @@ export const SearchInput: FC<ISearchProps> = ({
   };
 
   return (
-    <Input
+    <TextInput
+      label={label}
       data-lpignore="true"
-      autoComplete="new-password"
       type="search"
       className={classes.search}
       icon={icon}
