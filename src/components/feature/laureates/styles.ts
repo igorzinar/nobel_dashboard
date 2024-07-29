@@ -2,10 +2,7 @@ import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
   searchContainer: {
-    // backgroundColor: '#f9fafb',
-    padding: '0 24px 0 24px',
     width: '100%',
-    // margin: '0 0 20px 0',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -26,11 +23,6 @@ export const useStyles = createStyles((theme) => ({
       marginBottom: 15
     },
     width: '100%',
-
-    // '& input': {
-    //
-    //   border: 'none'
-    // },
 
     '& .mantine-Input-input[data-with-icon]': {
       paddingLeft: '56px'

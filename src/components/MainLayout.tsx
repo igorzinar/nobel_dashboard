@@ -1,14 +1,14 @@
-import { Container, Grid, Title } from '@mantine/core';
+import { Container, Title } from '@mantine/core';
 import PrizeOverview from './PrizeOverview';
 import LaureateOverview from './LaureateOverview';
+import { useStyles } from './styles';
 
 const MainLayout = () => {
+  const { classes } = useStyles();
   return (
-    <Container>
-      <Title order={1}>Nobel Prize Dashboard</Title>
-
+    <Container className={classes.layoutContainer}>
+      <Title>Nobel Prize Dashboard</Title>
       <PrizeOverview />
-
       <LaureateOverview />
     </Container>
   );

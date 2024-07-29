@@ -18,7 +18,7 @@ export interface IPrizeByCategoryQuery {
   year: number;
 }
 
-interface IPrizeLaureate {
+export interface IPrizeLaureate {
   id: string;
   knownName: {
     en: string;
@@ -42,3 +42,5 @@ export interface INobelPrize {
   links: INobelPrizeLink[];
   laureates: IPrizeLaureate[];
 }
+
+export class IAwardsByYear {}

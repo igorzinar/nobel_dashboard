@@ -38,7 +38,7 @@ const LaureatesTable = ({
   ));
 
   return (
-    <Box>
+    <Box mb={24}>
       <InfiniteScroll
         ref={scrollRef}
         dataLength={laureates?.length}

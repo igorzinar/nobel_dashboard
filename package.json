@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "@mantine/core": "^6.0.11",
-    "@mantine/dates": "^6.0.11",
     "@mantine/hooks": "^6.0.11",
     "@mantine/modals": "^6.0.11",
     "@reduxjs/toolkit": "^2.2.6",

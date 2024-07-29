@@ -2,39 +2,32 @@ import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { Modal, useMantineTheme, Button, Group } from '@mantine/core';
 import { INobelPrize } from '../../../entities/prizes/types';
-
-const transformCategoryData = (prizes: INobelPrize[]) => {
-  const categoryCount = prizes.reduce((acc, prize) => {
-    const category = prize.category.en;
-    if (!acc[category]) {
-      acc[category] = 0;
-    }
-    acc[category]++;
-    return acc;
-  }, {});
-
-  return Object.keys(categoryCount).map((category) => ({
-    name: category,
-    value: categoryCount[category]
-  }));
-};
+import { transformCategoryData } from '../../../helpers';
+import { ICategoryData } from '../../../types';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6384', '#36A2EB'];
+
 interface IAwardsCategoryChartProps {
   prizes: INobelPrize[];
 }
-const AwardsCategoryChart = ({ prizes }: IAwardsCategoryChartProps) => {
+
+const AwardsCategoryChart: React.FC<IAwardsCategoryChartProps> = ({ prizes }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<ICategoryData | null>(null);
   const theme = useMantineTheme();
 
   const data = transformCategoryData(prizes);
 
-  const handleChartClick = (data) => {
+  const handleChartClick = (data: any) => {
     if (data && data.activePayload) {
       setSelectedCategory(data.activePayload[0].payload);
       setModalOpen(true);
     }
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedCategory(null);
   };
 
   return (
@@ -57,15 +50,15 @@ const AwardsCategoryChart = ({ prizes }: IAwardsCategoryChartProps) => {
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
-
+      <h3>Number of laureates by category:</h3>
       <Modal
         opened={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={handleCloseModal}
         title={`Awards in ${selectedCategory?.name}`}
       >
         <p>Number of awards: {selectedCategory?.value}</p>
         <Group position="center">
-          <Button onClick={() => setModalOpen(false)}>Close</Button>
+          <Button onClick={handleCloseModal}>Close</Button>
         </Group>
       </Modal>
     </div>

@@ -21,7 +21,7 @@ const PrizesFilters = () => {
   };
 
   return (
-    <Flex align="center" justify="flex-start" m="md">
+    <Flex align="center" justify="center" m="sm">
       <NumberInput
         // p="md"
         placeholder="Start Year"
@@ -35,7 +35,7 @@ const PrizesFilters = () => {
         placeholder="End Year"
         hideControls
         // p="md"
-        mx="sm"
+        mx="xs"
         value={yearRange.end}
         max={2024}
         min={1901}

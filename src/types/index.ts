@@ -1,3 +1,5 @@
+import { INobelPrize } from '../entities/prizes/types';
+
 export interface INobelPrizeLink {
   rel?: string;
   href?: string;
@@ -75,4 +77,20 @@ export interface INobelPrizeLink {
 
 export interface IMultilingualNow {
   en?: string;
+}
+
+export interface IAwardsByYear {
+  year: number;
+  amount: number;
+  items: INobelPrize[];
+}
+
+export interface ICategoryData {
+  name: string;
+  value: number;
+}
+export interface ILaureatesByYear extends Partial<INobelPrize> {
+  year: number;
+  laureatesCount: number;
+  categoryName: string;
 }

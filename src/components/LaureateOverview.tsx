@@ -1,19 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { LoadingOverlay, Modal } from '@mantine/core';
+import { LoadingOverlay, Modal, Text } from '@mantine/core';
 import { useGetLaureatesListQuery } from '../services';
 import LaureatesTable from './laureatTable';
 import { useDisclosure } from '@mantine/hooks';
 import LaureateOverviewModal from './modals/LaureateOverviewModal';
 import { useActions } from '../hooks/redux/action';
 import { useAppSelector } from '../hooks/redux/redux';
-
 import FilterContainer from './feature/laureates/FilterContainer';
-import { ILaureateCommonInfo } from '../entities/laureates/types';
 
 const LaureateOverview = () => {
   const { setLaureates, setLaureatesFilters } = useActions();
   const { laureates, filters: laureateFilters, total } = useAppSelector((state) => state.laureates);
-  const [laureatesTableData, setLaureatesTableData] = useState<ILaureateCommonInfo[]>([]);
 
   const scrollRef = useRef<any>(null);
   const [opened, { open, close }] = useDisclosure(false);
@@ -28,10 +25,9 @@ const LaureateOverview = () => {
     limit: laureateFilters.limit,
     residence: laureateFilters.residence
   });
-  // console.log('laureateFilters ===> ', laureateFilters);
+
   useEffect(() => {
     if (data) {
-      console.log('data ===> ', data);
       const laureatesData =
         laureateFilters.offset > 0 ? [...laureates, ...data.laureates] : data?.laureates;
       setLaureates({ ...data, laureates: laureatesData });
@@ -43,27 +39,23 @@ const LaureateOverview = () => {
       ...laureateFilters,
       offset: laureateFilters.offset + 20
     });
-    console.log('handleLoadMore');
   };
 
-  useEffect(() => {
-    setLaureatesTableData(laureates || []);
-  }, [laureates]);
-
-  // if (error) return <div>Error loading data</div>;
-  // console.log('data?.laureates ===> ', data?.laureates);
   const handleRowClick = (id: number) => {
     setSelectedLaureate(id);
     open();
   };
+
+  if (error) return <div>Error loading data</div>;
   return (
     <div style={{ minHeight: '500px' }}>
+      <h2>Laureates list</h2>
       <FilterContainer />
       <LaureatesTable
         isLoading={isLoading}
         isFetching={isFetching}
         handleRowClick={handleRowClick}
-        laureates={laureatesTableData}
+        laureates={laureates}
         allDataLength={total}
         getNextData={handleLoadMore}
         scrollRef={scrollRef}

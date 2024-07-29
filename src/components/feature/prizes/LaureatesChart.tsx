@@ -9,15 +9,17 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { Modal, Button, Group } from '@mantine/core';
+import { Modal } from '@mantine/core';
 import { INobelPrize } from '../../../entities/prizes/types';
+import LaureatesYearDerailsModal from '../../modals/LaureatesYearDerailsModal';
+import { ILaureatesByYear } from '../../../types';
 
-const transformLaureateData = (prizes: INobelPrize[]) => {
+const transformLaureateData = (prizes: INobelPrize[]): ILaureatesByYear[] => {
   return prizes.map((prize) => ({
     year: parseInt(prize?.awardYear, 10),
     laureatesCount: prize?.laureates?.length,
-    category: prize?.category?.en,
-    details: prize?.laureates?.map((laureate) => laureate?.knownName?.en).join(', ')
+    categoryName: prize?.category?.en,
+    laureates: prize.laureates
   }));
 };
 
@@ -28,15 +30,22 @@ interface ILaureatesChartProps {
 
 const LaureatesChart = ({ color = '#8884d8', prizes }: ILaureatesChartProps) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedYear, setSelectedYear] = useState<any | null>(null);
+  const [selectedLaureatesByYear, setSelectedLaureatesByYear] = useState<ILaureatesByYear | null>(
+    null
+  );
 
   const data = transformLaureateData(prizes);
 
   const handleChartClick = (data) => {
     if (data && data.activePayload) {
-      setSelectedYear(data.activePayload[0].payload);
+      setSelectedLaureatesByYear(data.activePayload[0].payload);
       setModalOpen(true);
     }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedLaureatesByYear(null);
+    setModalOpen(false);
   };
 
   return (
@@ -52,15 +61,8 @@ const LaureatesChart = ({ color = '#8884d8', prizes }: ILaureatesChartProps) => 
         </LineChart>
       </ResponsiveContainer>
 
-      <Modal
-        opened={modalOpen}
-        onClose={() => setModalOpen(false)}
-        title={`Laureate Details for ${selectedYear?.year}`}
-      >
-        <p>{selectedYear?.details}</p>
-        <Group position="center">
-          <Button onClick={() => setModalOpen(false)}>Close</Button>
-        </Group>
+      <Modal opened={modalOpen} onClose={handleCloseModal}>
+        <LaureatesYearDerailsModal data={selectedLaureatesByYear} />
       </Modal>
     </div>
   );
