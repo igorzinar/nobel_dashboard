@@ -31,8 +31,13 @@ export const LaureatesYearDerailsModal = ({ data }: IAwardsDetailsModal) => {
             <Divider size="xl" />
             <Accordion radius="md" w="100%">
               {data?.laureates?.map((laureate, index) => (
-                <Accordion.Item value={laureate?.fullName?.en}>
-                  <Accordion.Control>{laureate?.fullName?.en}</Accordion.Control>
+                <Accordion.Item
+                  key={index}
+                  value={laureate?.fullName?.en ? laureate?.fullName?.en : laureate?.knownName?.en}
+                >
+                  <Accordion.Control>
+                    {laureate?.fullName?.en ? laureate?.fullName?.en : laureate?.knownName?.en}
+                  </Accordion.Control>
                   <Accordion.Panel>
                     <Flex direction="column" key={index}>
                       <PrizeDescriptionItem

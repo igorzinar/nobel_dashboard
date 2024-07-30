@@ -28,10 +28,10 @@ const AwardsDetailsModal = ({ awards }: IAwardsDetailsModal) => {
             <h2>Year: {awards?.year}</h2>
             <Accordion radius="md" w="100%">
               {awards?.items?.map((award, index) => (
-                <Accordion.Item value={award?.category.en}>
+                <Accordion.Item key={index} value={award?.category.en}>
                   <Accordion.Control>{award.category.en}</Accordion.Control>
                   <Accordion.Panel>
-                    <Flex direction="column" key={index} maw={300}>
+                    <Flex direction="column" maw={300}>
                       <PrizeDescriptionItem description={'Category'} value={award.category.en} />
                       <PrizeDescriptionItem
                         description={'Award amount'}
