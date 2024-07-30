@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Box, Divider, Flex, LoadingOverlay, Text } from '@mantine/core';
+import { Accordion, Box, Divider, Flex, Text } from '@mantine/core';
 import { useStyles } from './styles';
 import PrizeDescriptionItem from './components/PrizeDescriptionItem';
 import { ILaureatesByYear } from '../../types';

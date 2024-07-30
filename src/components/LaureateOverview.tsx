@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import { LoadingOverlay, Modal, Text } from '@mantine/core';
+import { LoadingOverlay, Modal } from '@mantine/core';
 import { useGetLaureatesListQuery } from '../services';
 import LaureatesTable from './laureatTable';
 import { useDisclosure } from '@mantine/hooks';
