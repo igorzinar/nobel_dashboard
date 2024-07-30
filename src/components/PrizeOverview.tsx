@@ -11,7 +11,7 @@ import PrizesFilters from './feature/prizes/PrizesFilters';
 const PrizeOverview = () => {
   const { setPrizes } = useActions();
   const { nobelPrizes, filters: prizeFilters } = useAppSelector((state) => state.nobelPrizes);
-  const { data, error, isLoading, isFetching } = useGetPrizesQuery({
+  const { data, error, isError, isLoading, isFetching } = useGetPrizesQuery({
     offset: prizeFilters.offset,
     limit: prizeFilters.limit,
     nobelPrizeYear: prizeFilters?.nobelPrizeYear,
@@ -26,15 +26,21 @@ const PrizeOverview = () => {
     }
   }, [data]);
 
-  if (error) return <div>Error loading data</div>;
+  if (error) return;
 
   return (
     <div>
-      <PrizesFilters />
-      <AdjustedAwardChart prizes={nobelPrizes} />
-      <LaureatesChart prizes={nobelPrizes} />
-      <AwardsCategoryChart prizes={nobelPrizes} />
-      <LoadingOverlay visible={isLoading || isFetching} />
+      {isError && error ? (
+        <div>Error loading data</div>
+      ) : (
+        <>
+          <PrizesFilters />
+          <AdjustedAwardChart prizes={nobelPrizes} />
+          <LaureatesChart prizes={nobelPrizes} />
+          <AwardsCategoryChart prizes={nobelPrizes} />
+          <LoadingOverlay visible={isLoading || isFetching} />
+        </>
+      )}
     </div>
   );
 };

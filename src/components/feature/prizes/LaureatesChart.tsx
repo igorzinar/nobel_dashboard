@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   LineChart,
   Line,
@@ -9,10 +9,10 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { Modal } from '@mantine/core';
+import { Modal, Box } from '@mantine/core';
 import { INobelPrize } from '../../../entities/prizes/types';
-import LaureatesYearDerailsModal from '../../modals/LaureatesYearDerailsModal';
 import { ILaureatesByYear } from '../../../types';
+import LaureatesYearDerailsModal from '../../modals/LaureatesYearDerailsModal';
 
 const transformLaureateData = (prizes: INobelPrize[]): ILaureatesByYear[] => {
   return prizes.map((prize) => ({
@@ -28,28 +28,29 @@ interface ILaureatesChartProps {
   prizes: INobelPrize[];
 }
 
-const LaureatesChart = ({ color = '#8884d8', prizes }: ILaureatesChartProps) => {
+const LaureatesChart: React.FC<ILaureatesChartProps> = ({ color = '#8884d8', prizes }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedLaureatesByYear, setSelectedLaureatesByYear] = useState<ILaureatesByYear | null>(
     null
   );
 
-  const data = transformLaureateData(prizes);
+  const data = useMemo(() => transformLaureateData(prizes), [prizes]);
 
-  const handleChartClick = (data) => {
-    if (data && data.activePayload) {
-      setSelectedLaureatesByYear(data.activePayload[0].payload);
+  const handleChartClick = useCallback((event: any) => {
+    if (event && event.activePayload) {
+      setSelectedLaureatesByYear(event.activePayload[0].payload);
       setModalOpen(true);
     }
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedLaureatesByYear(null);
     setModalOpen(false);
-  };
+  }, []);
 
   return (
-    <div>
+    <Box p="md">
+      <h3>Number of laureates by year:</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data} onClick={handleChartClick}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -64,7 +65,7 @@ const LaureatesChart = ({ color = '#8884d8', prizes }: ILaureatesChartProps) => 
       <Modal opened={modalOpen} onClose={handleCloseModal}>
         <LaureatesYearDerailsModal data={selectedLaureatesByYear} />
       </Modal>
-    </div>
+    </Box>
   );
 };
 

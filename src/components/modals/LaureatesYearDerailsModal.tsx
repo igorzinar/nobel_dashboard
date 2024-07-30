@@ -7,7 +7,7 @@ import { ILaureatesByYear } from '../../types';
 interface IAwardsDetailsModal {
   data: ILaureatesByYear | null;
 }
-const LaureatesYearDerailsModal = ({ data }: IAwardsDetailsModal) => {
+export const LaureatesYearDerailsModal = ({ data }: IAwardsDetailsModal) => {
   const { classes } = useStyles();
 
   return (
@@ -47,7 +47,6 @@ const LaureatesYearDerailsModal = ({ data }: IAwardsDetailsModal) => {
           </Flex>
         </>
       )}
-      <LoadingOverlay visible={false} />
     </Box>
   );
 };

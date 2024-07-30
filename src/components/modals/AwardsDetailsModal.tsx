@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Box, Flex, LoadingOverlay, Text } from '@mantine/core';
+import { Accordion, Box, Flex, Text } from '@mantine/core';
 import { useStyles } from './styles';
 import { IAwardsByYear } from '../../types';
 import PrizeDescriptionItem from './components/PrizeDescriptionItem';
@@ -45,7 +45,6 @@ const AwardsDetailsModal = ({ awards }: IAwardsDetailsModal) => {
           </Flex>
         </>
       )}
-      <LoadingOverlay visible={false} />
     </Box>
   );
 };

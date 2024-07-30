@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   LineChart,
   Line,
@@ -9,11 +9,11 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { Box, Modal } from '@mantine/core';
-import AwardsDetailsModal from '../../modals/AwardsDetailsModal';
+import { Modal, Box } from '@mantine/core';
 import { INobelPrize } from '../../../entities/prizes/types';
-import { transformPrizeData } from '../../../helpers';
+import AwardsDetailsModal from '../../modals/AwardsDetailsModal';
 import { IAwardsByYear } from '../../../types';
+import { transformPrizeData } from '../../../helpers';
 
 interface IAdjustedAwardChartProps {
   color?: string;
@@ -24,27 +24,28 @@ const AdjustedAwardChart: React.FC<IAdjustedAwardChartProps> = ({ color = '#8884
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAwards, setSelectedAwards] = useState<IAwardsByYear | null>(null);
 
-  const data = transformPrizeData(prizes);
+  const data = useMemo(() => transformPrizeData(prizes), [prizes]);
 
-  const handleChartClick = (event: any) => {
+  const handleChartClick = useCallback((event: any) => {
     if (event && event.activePayload) {
       setSelectedAwards(event.activePayload[0].payload);
       setModalOpen(true);
     }
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setModalOpen(false);
     setSelectedAwards(null);
-  };
+  }, []);
 
   return (
     <Box p="md">
+      <h3>Adjusted Award Amount Over the Years</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data} onClick={handleChartClick}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
-          <YAxis type="number" tick={{ fontSize: 10 }} />
+          <YAxis />
           <Tooltip />
           <Legend />
           <Line type="monotone" dataKey="amount" stroke={color} activeDot={{ r: 8 }} />

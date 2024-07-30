@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { Modal, useMantineTheme, Button, Group } from '@mantine/core';
 import { INobelPrize } from '../../../entities/prizes/types';
@@ -18,17 +18,17 @@ const AwardsCategoryChart: React.FC<IAwardsCategoryChartProps> = ({ prizes }) =>
 
   const data = transformCategoryData(prizes);
 
-  const handleChartClick = (data: any) => {
-    if (data && data.activePayload) {
-      setSelectedCategory(data.activePayload[0].payload);
+  const handleChartClick = useCallback((event: any) => {
+    if (event && event.activePayload) {
+      setSelectedCategory(event.activePayload[0].payload);
       setModalOpen(true);
     }
-  };
+  }, []);
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
+  const handleCloseModal = useCallback(() => {
     setSelectedCategory(null);
-  };
+    setModalOpen(false);
+  }, []);
 
   return (
     <div>

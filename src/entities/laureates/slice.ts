@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILaureateCommonInfo, ILaureateListResponse } from './types';
 
-interface ILaureateFilter {
+export interface ILaureateFilter {
   limit: number;
   offset: number;
   name: string;
