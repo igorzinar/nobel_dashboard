@@ -11,7 +11,7 @@ import {
   ILaureateListResponse
 } from '../entities/laureates/types';
 
-const BASE_URL = 'https://api.nobelprize.org/2.1/';
+const BASE_URL = import.meta.env.VITE_NOBEL_URL;
 
 export const nobelApi = createApi({
   reducerPath: 'api',
