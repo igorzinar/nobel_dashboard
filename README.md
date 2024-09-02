@@ -50,3 +50,4 @@ This project is a React application that visualizes Nobel Prize award data using
 ## License
 
 This project is licensed under the MIT License.
+And free ))
